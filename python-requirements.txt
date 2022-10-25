@@ -1,0 +1,4 @@
+frontmatter==3.0.7
+python-frontmatter==1.0.0
+PyYAML==5.1
+typing==3.7.4.3

@@ -1,0 +1,5 @@
+*.indd
+*.pdf
+.venv
+image/*
+.DS_Store
