@@ -12,7 +12,7 @@ See [Proper Python](https://blog.summittdweller.com/posts/2022/09/proper-python/
 
 ## frontmatter-to-csv.py
 
-This script is designed to read all of the .md files in a directory tree, and populate a single .csv file with the contents/status of all the frontmatter found in those Markdown files.  
+This script is designed to read all of the .md files in a directory tree, and populate a single .csv file with the contents/status of all the frontmatter found in those Markown files.  Inspired by [convert.py](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv/src/branch/main/frontmatter_to_csv/convert.py) from the [lukas/frontmatter-to-csv](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv) repo.  
 
 Static elements of the script currently include:
 
