@@ -16,6 +16,7 @@ import csv
 fields = {
   "md-path": "Markdown Path",
   "md-file": "Markdown Filename",
+  "dev-link": "Live DEV Link",
   "title": "title",
   "articleIndex": "articleIndex",
   "index": "index",
@@ -61,6 +62,19 @@ def process_contributors(contributors, contributor_fields):
     else:
       c_filtered[f] = ""
   return len(contributors), c_filtered 
+
+def build_link(path):
+  base_url = "https://icy-tree-020380010.azurestaticapps.net/"
+  filename = path.name
+  parent = path.parent.name
+  grandma = path.parent.parent.name
+  if "past" in grandma:
+    url = f"{base_url}{grandma}/{parent}/{filename}".rstrip(" .md")
+  else:
+    url = f"{base_url}{parent}/{filename}".rstrip(" .md")
+  return f"{url} "    # blank after the address is required to get a proper link!               
+
+######################################################################
 
 # Main...
 if __name__ == '__main__':
@@ -128,6 +142,9 @@ if __name__ == '__main__':
       # Seed the .csv row with path and filename
       filtered[fields['md-file']] = path.name
       filtered[fields['md-path']] = path.parent.name
+
+      # Build a live link and see the .csv row with it
+      filtered[fields['dev-link']] = build_link(path)
 
       # Note any obsolete front matter
       filtered[fields['obsolete']] = obsolete
