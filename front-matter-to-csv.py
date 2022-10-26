@@ -1,4 +1,4 @@
-# frontmatter-to-csv.py
+# front matter-to-csv.py
 ## This script is designed to read all of the .md files in a directory tree, 
 ## and populate a single .csv file with the contents/status of all the frontmatter found 
 ## in those Markdown files.
@@ -80,7 +80,7 @@ def build_link(path):
 if __name__ == '__main__':
   
   # Open the .csv file for output
-  with open("frontmatter-status.csv", "w") as csvfile:
+  with open("front matter-status.csv", "w") as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fields.values())
     writer.writeheader()
 
