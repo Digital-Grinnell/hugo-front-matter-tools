@@ -201,7 +201,7 @@ header_image_fields = ["filename", "alt_text"]
 ### Input `glob` File Spec
 
 ```python
- filepath = "/Users/mark/GitHub/rootstalk/content/**/volume*/*.md"
+ filepath = str(pathlib.Path.home()) + "/GitHub/rootstalk/content/**/volume*/*.md"
 ```
 
 ### CSV Output Filename

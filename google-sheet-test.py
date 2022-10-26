@@ -1,7 +1,7 @@
 import gspread
 
 sa = gspread.service_account()
-sh = sa.open("Rootstalk Articles Frontmatter")
+sh = sa.open("Rootstalk Articles Front Matter")
 
 wks = sh.worksheet("25-Oct-2022")
 
