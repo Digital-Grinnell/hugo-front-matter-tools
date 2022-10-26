@@ -1,6 +1,6 @@
-# Hugo Frontmatter Tools
+# Hugo Front Matter Tools
 
-A collection of Python scripts desinged to help manage Hugo .md content frontmatter.
+A collection of Python scripts desinged to help manage [Hugo](https://gohugo.io) `.md` content [front matter](https://gohugo.io/content-management/front-matter/).
 
 ---
 
@@ -10,7 +10,7 @@ See [Proper Python](https://blog.summittdweller.com/posts/2022/09/proper-python/
 
 ---
 
-## frontmatter-to-csv.py
+## front-matter-to-csv.py
 
 This script is designed to read all of the .md files in a directory tree, and populate a single .csv file with the contents/status of all the frontmatter found in those Markown files.  Inspired by [convert.py](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv/src/branch/main/frontmatter_to_csv/convert.py) from the [lukas/frontmatter-to-csv](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv) repo.  
 
@@ -207,10 +207,12 @@ header_image_fields = ["filename", "alt_text"]
 ### CSV Output Filename
 
 ```python
-with open("frontmatter-status.csv", "w") as csvfile:
+with open("front-matter-status.csv", "w") as csvfile:
  ```
 
 ### Link Generation Base URL
+
+The link used here is automatically built by the `main` branch of the [Rootstalk project repo](https://github.com/Digital-Grinnell/rootstalk).
 
 ```python
 def build_link(path):
