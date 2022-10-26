@@ -1,5 +1,3 @@
-*.indd
-*.pdf
 .venv
-image/*
 .DS_Store
+__pycache__
