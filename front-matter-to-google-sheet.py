@@ -19,6 +19,7 @@ fields = {
   "md-file": "Filename",
   "dev-link": "Live DEV Link",
   "title": "title",
+  "last_modified_at": "last_modified_at",
   "articleIndex": "articleIndex",
   "description": "description",
   "azure_dir": "azure_dir",

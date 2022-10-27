@@ -140,6 +140,25 @@ The Streets of Da...
 
 __*Huzzah!*__
 
+## Google Sheet Feature is Complete
+
+Development of Google Sheet integration within the script prompted me to rename the old script from `front-matter-to-csv.py` to `front-matter-to-google-sheet.py`, but this new script still generates a new `front-matter-status.csv` file each time it's run.
+
+After the `.csv` is generated the script attempts to open our _Rootstalk Articles Front Matter_ [Google Sheet](https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/edit#gid=1648416442) where it creates a new worksheet/tab named with the current date/time.  The `.csv` file contents are then uploaded to the new worksheet using this block of code:
+
+```python
+  try:
+    paste_csv(csv_filename, sh, sheet_name + "!A1")
+  except Exception as e:
+    print(e)  
+```
+
+When it works we get a new worksheet/tab full of current front matter data in our all-important Google Sheet, https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/edit#gid=1648416442. 
+
+## Documentation
+
+Yes, there is more!  Check out [Google-Sheet-Front-Matter.mp4](https://rootstalk.blob.core.windows.net/documentation/Google-Sheet-Front-Matter.mp4) sometime when you have 15 minutes to kill.  :smile:
+
 ---
 
 ## Static Elements
@@ -150,15 +169,15 @@ Static elements of the script currently include the following.
 
 ```python
 fields = {
-  "md-path": "Markdown Path",
-  "md-file": "Markdown Filename",
+  "md-path": "Content Path",
+  "md-file": "Filename",
   "dev-link": "Live DEV Link",
   "title": "title",
+  "last_modified_at": "last_modified_at",
   "articleIndex": "articleIndex",
-  "index": "index",
   "description": "description",
-  "date": "date",
-  "draft": "draft",
+  "azure_dir": "azure_dir",
+  "obsolete": "Obsolete Front Matter",
   "contributors": "contributors",
   "role": "contributor.role",
   "name": "contributor.name",
@@ -166,7 +185,6 @@ fields = {
   "caption": "contributor.caption",
   "bio": "contributor.bio",
   "articletype": "articletype",
-  "azure_dir": "azure_dir",
   "header_image": "header_image",
   "filename": "header_image.filename",
   "alt_text": "header_image.alt_text",
@@ -174,7 +192,9 @@ fields = {
   "byline": "byline",
   "subtitle": "subtitle",
   "no_leaf_bug": "no_leaf_bug",
-  "obsolete": "Obsolete Front Matter"
+  "index": "index",
+  "date": "date",
+  "draft": "draft"
 }
 ```
 
