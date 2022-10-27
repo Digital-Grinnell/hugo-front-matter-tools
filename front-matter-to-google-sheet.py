@@ -20,10 +20,9 @@ fields = {
   "dev-link": "Live DEV Link",
   "title": "title",
   "articleIndex": "articleIndex",
-  "index": "index",
   "description": "description",
-  "date": "date",
-  "draft": "draft",
+  "azure_dir": "azure_dir",
+  "obsolete": "Obsolete Front Matter",
   "contributors": "contributors",
   "role": "contributor.role",
   "name": "contributor.name",
@@ -31,7 +30,6 @@ fields = {
   "caption": "contributor.caption",
   "bio": "contributor.bio",
   "articletype": "articletype",
-  "azure_dir": "azure_dir",
   "header_image": "header_image",
   "filename": "header_image.filename",
   "alt_text": "header_image.alt_text",
@@ -39,7 +37,9 @@ fields = {
   "byline": "byline",
   "subtitle": "subtitle",
   "no_leaf_bug": "no_leaf_bug",
-  "obsolete": "Obsolete Front Matter"
+  "index": "index",
+  "date": "date",
+  "draft": "draft"
 }
 
 obsolete = ["sidebar", "pid", "issueIndex", "azure_headerimage", "author", "azure_headshot", "authorbio", "headerimage"]
