@@ -15,7 +15,7 @@ import csv
 import gspread
 
 fields = {
-  "md-issue": "Issue",
+  "md-path": "Content Path",
   "md-file": "Filename",
   "dev-link": "Live DEV Link",
   "title": "title",
@@ -39,7 +39,6 @@ fields = {
   "byline": "byline",
   "subtitle": "subtitle",
   "no_leaf_bug": "no_leaf_bug",
-  "md-path": "Content Path",
   "obsolete": "Obsolete Front Matter"
 }
 
@@ -182,7 +181,6 @@ if __name__ == '__main__':
           filtered[fields[key]] = truncate(value)
     
       # Seed the .csv row with path and filename
-      filtered[fields['md-issue']] = path.parent.name
       filtered[fields['md-file']] = path.name[:-3]
       filtered[fields['md-path']] = parent_path(path)
 
