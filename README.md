@@ -83,7 +83,7 @@ Following the [video](https://www.youtube.com/watch?v=bu5wXjz2KvU) I did this...
 
 That completes the credentials acquisition process.  Per the video I then returned to the project window here in _VSCode_ and...
 
-1) Activate and dd the `gspread` project to our virtual environment like so:
+1) Activate and enable the `gspread` project to our virtual environment like so:
   ```
   source .venv/bin/activate
   pip3 install gspread
@@ -105,9 +105,9 @@ Time for some testing so I created the `google-sheet-test.py` script by borrowin
 import gspread
 
 sa = gspread.service_account()
-sh = sa.open("Rootstalk Articles Frontmatter")
+sh = sa.open("Rootstalk Articles Front Matter")
 
-wks = sh.worksheet("25-Oct-2022")
+wks = sh.worksheet("26-Oct-2022-09:08PM")
 
 print('Rows: ', wks.row_count)
 print('Cols: ', wks.col_count)
@@ -129,8 +129,8 @@ print(wks.get('A7:E9'))
 Running that code as a test produced this:
 
 ```bash
-(.venv) ╭─mark@Marks-Mac-Mini ~/GitHub/hugo-frontmatter-tools ‹google-sheet*› 
-╰─$ /Users/mark/GitHub/hugo-frontmatter-tools/.venv/bin/python /Users/mark/GitHub/hugo-frontmatter-tools/google-sheet-test.py
+(.venv) ╭─mark@Marks-Mac-Mini ~/GitHub/hugo-front-matter-tools ‹google-sheet*› 
+╰─$ /Users/mark/GitHub/hugo-frontmatter-tools/.venv/bin/python /Users/mark/GitHub/hugo-front-matter-tools/google-sheet-test.py
 Rows:  1000
 Cols:  26
 volume-viii-issue-1
@@ -207,7 +207,7 @@ header_image_fields = ["filename", "alt_text"]
 ### CSV Output Filename
 
 ```python
-with open("front-matter-status.csv", "w") as csvfile:
+  csv_filename = "front-matter-status.csv"
  ```
 
 ### Link Generation Base URL

@@ -85,7 +85,7 @@ if __name__ == '__main__':
     writer.writeheader()
 
     # Specify the path to be processed...
-    filepath = "/Users/mark/GitHub/rootstalk/content/**/volume*/*.md"
+    filepath = str(pathlib.Path.home()) + "/GitHub/rootstalk/content/**/volume*/*.md"
   
     # Iterate over the working directory tree + subdirectories for all {issue}/{article}.md files
     # Using '*.md' pattern recursively
