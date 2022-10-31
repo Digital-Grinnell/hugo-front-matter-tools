@@ -36,6 +36,7 @@ fields = {
   "alt_text": "header_image.alt_text",
   "tags": "tags",
   "byline": "byline",
+  "byline2": "byline2",
   "subtitle": "subtitle",
   "no_leaf_bug": "no_leaf_bug",
   "index": "index",
