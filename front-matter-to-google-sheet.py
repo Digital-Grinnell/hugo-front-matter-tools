@@ -13,6 +13,8 @@ from typing import Dict
 import frontmatter
 import csv
 import gspread
+from gspread_formatting import *
+
 
 branches = [ "develop", "main", "production" ]
 
@@ -121,6 +123,37 @@ def paste_csv(csv_file, sheet, cell):
   }
   return sheet.batch_update(body)
     
+
+# From an example at https://pypi.org/project/gspread-formatting/
+def format_google_sheet(sheet, tab_name):
+  bold = cellFormat(
+    backgroundColor=color(0, 0, 0),
+    textFormat=textFormat(bold=True, foregroundColor=color(1, 1, 1)),
+    )
+  wks = sheet.worksheet(tab_name)
+  batch = batch_updater(sheet)
+  batch.set_frozen(wks, rows=1)
+  batch.format_cell_ranges(wks, [('A1:Z1', bold)])
+  return batch.execute()
+
+
+# From an example at https://pypi.org/project/gspread-formatting/
+def highlight_todo_cells(sheet, tab_name):
+  wks = sheet.worksheet(tab_name)
+  rule = ConditionalFormatRule(
+    ranges=[GridRange.from_a1_range('H2:H2000', wks)],
+    booleanRule=BooleanRule(
+        condition=BooleanCondition('NOT_BLANK'),
+        format=CellFormat(textFormat=textFormat(bold=True), backgroundColor=Color(1,0,0))
+    )
+  )
+
+  rules = get_conditional_format_rules(wks)
+  rules.append(rule)
+  rules.save()
+
+
+
 ######################################################################
 
 # Main...
@@ -228,3 +261,14 @@ if __name__ == '__main__':
   except Exception as e:
     print(e)
 
+  # Call our format function to set the format of the new sheet
+  try:
+    format_google_sheet(sh, sheet_name)
+  except Exception as e:
+    print(e)
+
+  # Call our function to set conditional formatting
+  try:
+    highlight_todo_cells(sh, sheet_name)
+  except Exception as e:
+    print(e)
