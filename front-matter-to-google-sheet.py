@@ -24,6 +24,7 @@ fields = {
   "production-link": "Production Link",
   "title": "title",
   "last_modified_at": "last_modified_at",
+  "to-do": "to-do List",
   "articleIndex": "articleIndex",
   "description": "description",
   "azure_dir": "azure_dir",
@@ -57,8 +58,8 @@ header_image_fields = ["filename", "alt_text"]
 
 def truncate(text):
   if type(text) is str:
-    if len(text) > 20:
-      return text[:17] + "..."
+    if len(text) > 128:
+      return text[:125] + "..."
   return text  
 
 def process_contributors(contributors, contributor_fields):
