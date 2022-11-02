@@ -1,7 +1,8 @@
-# front matter-to-csv.py
-## This script is designed to read all of the .md files in a directory tree, 
-## and populate a specified .csv file with the contents/status of all the frontmatter found 
-## in those Markdown files.
+# rootstalk-front-matter-to-google-sheet.py
+##
+## This script, evolved from front-matter-to-csv.py, is designed to read all of the ROOTSTALK .md files in 
+## a directory tree and populate a specified .csv file (and dedicated Google Sheet) with the contents/status
+## of all the frontmatter found in those Markdown files.
 
 import os
 import glob

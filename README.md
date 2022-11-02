@@ -10,9 +10,17 @@ See [Proper Python](https://blog.summittdweller.com/posts/2022/09/proper-python/
 
 ---
 
-## front-matter-to-csv.py
+## front-matter-to-csv.py (Deprecated)
 
-This script is designed to read all of the .md files in a directory tree, and populate a single .csv file with the contents/status of all the frontmatter found in those Markown files.  Inspired by [convert.py](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv/src/branch/main/frontmatter_to_csv/convert.py) from the [lukas/frontmatter-to-csv](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv) repo.  
+This script is/was designed to read all of the .md files in a directory tree, and populate a single .csv file with the contents/status of all the frontmatter found in those Markown files.  Inspired by [convert.py](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv/src/branch/main/frontmatter_to_csv/convert.py) from the [lukas/frontmatter-to-csv](https://git.kucharczyk.xyz/lukas/frontmatter-to-csv) repo.  
+
+## rootstalk-front-matter-to-google-sheet.py
+
+Having evolved from `front-matter-to-csv.py`, this script is designed to read all of the ROOTSTALK .md files in a directory tree and populate a specified .csv file (and dedicated Google Sheet) with the contents/status of all the frontmatter found in those Markdown files.
+
+This script is specific to _Rootstalk_ because many of the constants and static elements (documented below) have become specific to our _Rootstalk_ structure.  However, the concept of harvesting and reporting `.md` file front matter remains unchanged.  This script could easily be adapted to work with other front matter structures.  
+
+Use this link to open the [_Rootstalk Articles Front Matter_ Google Sheet](https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/). 
 
 ---
 
@@ -144,7 +152,7 @@ __*Huzzah!*__
 
 Development of Google Sheet integration within the script prompted me to rename the old script from `front-matter-to-csv.py` to `front-matter-to-google-sheet.py`, but this new script still generates a new `front-matter-status.csv` file each time it's run.
 
-After the `.csv` is generated the script attempts to open our _Rootstalk Articles Front Matter_ [Google Sheet](https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/edit#gid=1648416442) where it creates a new worksheet/tab named with the current date/time.  The `.csv` file contents are then uploaded to the new worksheet using this block of code:
+After the `.csv` is generated the script attempts to open our _Rootstalk Articles Front Matter_ [Google Sheet](https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/) where it creates a new worksheet/tab named with the current date/time.  The `.csv` file contents are then uploaded to the new worksheet using this block of code:
 
 ```python
   try:
@@ -153,7 +161,7 @@ After the `.csv` is generated the script attempts to open our _Rootstalk Article
     print(e)  
 ```
 
-When it works we get a new worksheet/tab full of current front matter data in our all-important Google Sheet, https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/edit#gid=1648416442. 
+When it works we get a new worksheet/tab full of current front matter data in our all-important Google Sheet, https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/. 
 
 ## Documentation
 
