@@ -14,10 +14,14 @@ import frontmatter
 import csv
 import gspread
 
+branches = [ "develop", "main", "production" ]
+
 fields = {
   "md-path": "Content Path",
   "md-file": "Filename",
-  "dev-link": "Live DEV Link",
+  "develop-link": "develop Link",
+  "main-link": "main Link",
+  "production-link": "Production Link",
   "title": "title",
   "last_modified_at": "last_modified_at",
   "articleIndex": "articleIndex",
@@ -62,20 +66,20 @@ def process_contributors(contributors, contributor_fields):
   for f in contributor_fields:
     if f in contributors[0].keys():
       c_filtered[f] = contributors[0][f]
-    else:
+    else: 
       c_filtered[f] = ""
   return len(contributors), c_filtered 
 
-def build_link(path):
-  base_url = "https://icy-tree-020380010.azurestaticapps.net/"
+def build_link(k, path):
+  base_urls = { "develop":"https://thankful-flower-0a2308810.1.azurestaticapps.net/", "main":"https://icy-tree-020380010.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
   filename = path.name
   parent = path.parent.name
   grandma = path.parent.parent.name
   if "past" in grandma:
-    url = f"{base_url}{grandma}/{parent}/{filename}".rstrip(" .md")
+    url = f"{base_urls[k]}{grandma}/{parent}/{filename}".rstrip(" .md")
   else:
-    url = f"{base_url}{parent}/{filename}".rstrip(" .md")
-  return f"{url} "    # blank after the address is required to get a proper link!   
+    url = f"{base_urls[k]}{parent}/{filename}".rstrip(" .md")
+  return f"{url} "   # blank at the end is necessary for links to work properly
 
 def parent_path(path):
   parent = path.parent.name
@@ -186,8 +190,10 @@ if __name__ == '__main__':
       filtered[fields['md-file']] = path.name[:-3]
       filtered[fields['md-path']] = parent_path(path)
 
-      # Build a live link and see the .csv row with it
-      filtered[fields['dev-link']] = build_link(path)
+      # Build one live link for each code branch and seed the .csv row with them
+      for key in branches:
+        key_name = f"{key}-link"
+        filtered[fields[key_name]] = build_link(key, path)
 
       # Note any obsolete front matter
       filtered[fields['obsolete']] = obsolete

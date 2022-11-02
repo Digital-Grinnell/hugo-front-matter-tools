@@ -165,13 +165,23 @@ Yes, there is more!  Check out [Google-Sheet-Front-Matter.mp4](https://rootstalk
 
 Static elements of the script currently include the following.
 
+### branches
+
+List of the three code branches for which links are generated in the Google Sheet.
+
+```python
+branches = [ "develop", "main", "production" ]
+```
+
 ### Expected Fields
 
 ```python
 fields = {
   "md-path": "Content Path",
   "md-file": "Filename",
-  "dev-link": "Live DEV Link",
+  "develop-link": "develop Link",
+  "main-link": "main Link",
+  "production-link": "Production Link",
   "title": "title",
   "last_modified_at": "last_modified_at",
   "articleIndex": "articleIndex",
@@ -233,9 +243,9 @@ header_image_fields = ["filename", "alt_text"]
 
 ### Link Generation Base URL
 
-The link used here is automatically built by the `main` branch of the [Rootstalk project repo](https://github.com/Digital-Grinnell/rootstalk).
+The links used here are automatically built by the two principal braches of the [Rootstalk project repo](https://github.com/Digital-Grinnell/rootstalk), and a third for production at https://rootstalk.grinnell.edu.
 
 ```python
-def build_link(path):
-  base_url = "https://icy-tree-020380010.azurestaticapps.net/"
+def build_link(k, path):
+  base_urls = { "develop":"https://thankful-flower-0a2308810.1.azurestaticapps.net/", "main":"https://icy-tree-020380010.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
 ```
