@@ -61,8 +61,8 @@ header_image_fields = ["filename", "alt_text"]
 
 def truncate(text):
   if type(text) is str:
-    if len(text) > 128:
-      return text[:125] + "..."
+    if len(text) > 132:
+      return text[:129] + "..."
   return text  
 
 def process_contributors(contributors, contributor_fields):
@@ -79,6 +79,8 @@ def build_link(k, path):
   filename = path.name
   parent = path.parent.name
   grandma = path.parent.parent.name
+  if (filename == "_index.md"):
+    filename = ""
   if "past" in grandma:
     url = f"{base_urls[k]}{grandma}/{parent}/{filename}".rstrip(" .md")
   else:
