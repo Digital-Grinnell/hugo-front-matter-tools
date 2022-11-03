@@ -13,9 +13,8 @@ from queue import Empty
 from typing import Dict
 import frontmatter
 import csv
-import gspread
-from gspread_formatting import *
-
+import gspread as gs
+import gspread_formatting as gsf
 
 branches = [ "develop", "main", "production" ]
 
@@ -95,18 +94,18 @@ def parent_path(path):
   else:
     return f"{parent}"
 
+# Lifted from https://stackoverflow.com/a/54231563
+#  csv_file - path to csv file to upload
+#  sheet - a gspread.Spreadsheet object
+#  cell - string giving starting cell, optionally including sheet/tab name
+#    example: 'A1', 'MySheet!C3', etc.
 def paste_csv(csv_file, sheet, cell):
-  # Lifted from https://stackoverflow.com/a/54231563
-  #  csv_file - path to csv file to upload
-  #  sheet - a gspread.Spreadsheet object
-  #  cell - string giving starting cell, optionally including sheet/tab name
-  #    example: 'A1', 'MySheet!C3', etc.
   if '!' in cell:
     (tab_name, cell) = cell.split('!')
     wks = sheet.worksheet(tab_name)
   else:
     wks = sheet.sheet1
-  (first_row, first_column) = gspread.utils.a1_to_rowcol(cell)
+  (first_row, first_column) = gs.utils.a1_to_rowcol(cell)
 
   with open(csv_file, 'r') as f:
     csv_contents = f.read()
@@ -126,15 +125,14 @@ def paste_csv(csv_file, sheet, cell):
   }
   return sheet.batch_update(body)
     
-
 # From an example at https://pypi.org/project/gspread-formatting/
 def format_google_sheet(sheet, tab_name):
-  bold = cellFormat(
-    backgroundColor=color(0, 0, 0),
-    textFormat=textFormat(bold=True, foregroundColor=color(1, 1, 1)),
+  bold = gsf.cellFormat(
+    backgroundColor=gsf.color(0.9, 0.9, 0.9),
+    textFormat=gsf.textFormat(bold=True, foregroundColor=gsf.color(0, 0, 0)),
     )
   wks = sheet.worksheet(tab_name)
-  batch = batch_updater(sheet)
+  batch = gsf.batch_updater(sheet)
   batch.set_frozen(wks, rows=1)
   batch.format_cell_ranges(wks, [('A1:Z1', bold)])
   return batch.execute()
@@ -143,18 +141,17 @@ def format_google_sheet(sheet, tab_name):
 # From an example at https://pypi.org/project/gspread-formatting/
 def highlight_todo_cells(sheet, tab_name):
   wks = sheet.worksheet(tab_name)
-  rule = ConditionalFormatRule(
-    ranges=[GridRange.from_a1_range('H2:H2000', wks)],
-    booleanRule=BooleanRule(
-        condition=BooleanCondition('NOT_BLANK'),
-        format=CellFormat(textFormat=textFormat(bold=True), backgroundColor=Color(1,0,0))
+  rule = gsf.ConditionalFormatRule(
+    ranges=[gsf.GridRange.from_a1_range('H2:H2000', wks)],
+    booleanRule=gsf.BooleanRule(
+        condition=gsf.BooleanCondition('NOT_BLANK'),
+        format=gsf.cellFormat(textFormat=gsf.textFormat(bold=True), backgroundColor=gsf.Color(1,1,0))
     )
   )
 
-  rules = get_conditional_format_rules(wks)
+  rules = gsf.get_conditional_format_rules(wks)
   rules.append(rule)
   rules.save()
-
 
 
 ######################################################################
@@ -240,7 +237,7 @@ if __name__ == '__main__':
   # Ok, done writing the .csv, now copy it to a new tab/worksheet in our Google Sheet
   # Open the Google service account and sheet
   try:
-    sa = gspread.service_account()
+    sa = gs.service_account()
   except Exception as e:
     print(e)
 
@@ -264,13 +261,13 @@ if __name__ == '__main__':
   except Exception as e:
     print(e)
 
-  # Call our format function to set the format of the new sheet
+  # Call our format function to set the overall format of the new sheet
   try:
     format_google_sheet(sh, sheet_name)
   except Exception as e:
     print(e)
 
-  # Call our function to set conditional formatting
+  # Call our function to set conditional formatting rules
   try:
     highlight_todo_cells(sh, sheet_name)
   except Exception as e:
