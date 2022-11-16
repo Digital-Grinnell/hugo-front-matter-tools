@@ -23,6 +23,13 @@ Already up to date.
 (.venv) ╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main●› 
 ╰─$ pip3 install -r python-requirements.txt
 ```
+
+Then...
+
+```
+(.venv) ╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main●›
+╰─$ python3 rootstalk-front-matter-to-google-sheet.py
+```
 ---
 
 ## front-matter-to-csv.py (Deprecated)
