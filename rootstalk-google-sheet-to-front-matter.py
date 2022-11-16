@@ -8,7 +8,8 @@ import os
 import glob
 import pathlib
 import sys
-import pandas as pd
+import csv
+import tempfile
 from datetime import datetime
 
 from queue import Empty
@@ -130,47 +131,60 @@ editable_fields = {
 #   rules.append(rule)
 #   rules.save()
 
+  # # Read the 'Update' sheet into a Pandas dataframe for processing.  
+  # # Per https://medium.com/geekculture/2-easy-ways-to-read-google-sheets-data-using-python-9e7ef366c775
+  # SHEET_ID = '1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI'
+  # SHEET_NAME = 'Update'
+  # url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}'
+  # df = pd.read_csv(url, sep='\t')
+  # print(df.dtypes)    # print the header row
+
 
 ######################################################################
 
 # Main...
 if __name__ == '__main__':
 
-  # Read the 'Update' sheet into a Pandas dataframe for processing.  
-  # Per https://medium.com/geekculture/2-easy-ways-to-read-google-sheets-data-using-python-9e7ef366c775
-  SHEET_ID = '1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI'
-  SHEET_NAME = 'Update'
-  url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}'
-  df = pd.read_csv(url)
-  print(df.head())
+  # Open the Google service account and sheet
+  try:
+    sa = gs.service_account()
+  except Exception as e:
+    print(e)
 
-  # # Open the Google service account and sheet
-  # try:
-  #   sa = gs.service_account()
-  # except Exception as e:
-  #   print(e)
+  try:  
+    sh = sa.open("Rootstalk Articles Front Matter")
+  except Exception as e:
+    print(e)  
 
-  # try:  
-  #   sh = sa.open("Rootstalk Articles Front Matter")
-  # except Exception as e:
-  #   print(e)  
+  # Read all worksheets from the Google Sheet, and find the sheet named "Update"
+  sheets = sh.worksheets()
+  for ws in sheets:
+    title = ws.title
+    # Found the "Update" sheet
+    if (title == "Update"):
 
-  # # Read all worksheets from the Google Sheet, and find the sheet named "Update"
-  # sheets = sh.worksheets()
-  # for ws in sheets:
-  #   title = ws.title
-  #   if (title == "Update"):
+      # Determine if the required_fields are present
+      for req in required_fields.values():
+        if req not in headers:
+          msg = print(f"Error: Required header '{req}' was NOT found in the 'Update' worksheet!")
+          sys.exit(msg)
 
-      # # Found the "Update" sheet
-      # nrows = ws.row_count
-      # ncols = ws.col_count
-      # headers = ws.row_values(1)
+      # Generate a temporary .csv of the worksheet 
+      # per https://community.esri.com/t5/python-questions/how-to-convert-a-google-spreadsheet-to-a-csv-file/td-p/452722
+      with open('temp.csv', 'w', newline='') as csvfile:
+        csvwriter = csv.writer(csvfile)
+        csvwriter.writerows(ws.get_all_values())
 
-      # # Determine if the required_fields are present
-      # for req in required_fields.values():
-      #   if req not in headers:
-      #     msg = print(f"Error: Required header '{req}' was NOT found in the 'Update' worksheet!")
-      #     sys.exit(msg)
+      # Read the temporary .csv into a dict
+      with open('temp.csv', 'r') as data:
+        for record in csv.DictReader(data):
+          # worksheet record now in dict form, process it for updates
+
+
+
+
+
+
 
       # # Determine if any editable_fields are present
       # found = False
@@ -181,15 +195,10 @@ if __name__ == '__main__':
       #     found = True
       #     found_headers.append(edt)
 
-      
-
-
-
-
-
-      # # Loop row-by-row
-      # for row in range(nrows):
-      #   values = ws.row_values(row+1)      
+      # # If any editable_fields were found, loop row-by-row
+      # if found:
+      #   for row in range(2,nrows):
+      #     values = ws.row_values(row)      
 
 
   # csv_filename = "front-matter-status.csv"
