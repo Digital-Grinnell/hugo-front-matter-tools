@@ -8,6 +8,21 @@ A collection of Python scripts desinged to help manage [Hugo](https://gohugo.io)
 
 See [Proper Python](https://blog.summittdweller.com/posts/2022/09/proper-python/) for applicable guidance when enabling Python parts of this workflow.  
 
+### Quick Start
+
+Since the project's Python infrastructure has already been created, but is not saved in our _GitHub_ repo, all you need to do to get started locally is this:
+
+```bash
+╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main› 
+╰─$ git pull
+Already up to date.
+╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main› 
+╰─$ python3 -m venv .venv
+╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main●› 
+╰─$ source .venv/bin/activate
+(.venv) ╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main●› 
+╰─$ pip3 install -r python-requirements.txt
+```
 ---
 
 ## front-matter-to-csv.py (Deprecated)
