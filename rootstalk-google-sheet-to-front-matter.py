@@ -7,6 +7,8 @@
 import os
 import glob
 import pathlib
+import sys
+import pandas as pd
 from datetime import datetime
 
 from queue import Empty
@@ -134,40 +136,50 @@ editable_fields = {
 # Main...
 if __name__ == '__main__':
 
-  # Open the Google service account and sheet
-  try:
-    sa = gs.service_account()
-  except Exception as e:
-    print(e)
+  # Read the 'Update' sheet into a Pandas dataframe for processing.  
+  # Per https://medium.com/geekculture/2-easy-ways-to-read-google-sheets-data-using-python-9e7ef366c775
+  SHEET_ID = '1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI'
+  SHEET_NAME = 'Update'
+  url = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/gviz/tq?tqx=out:csv&sheet={SHEET_NAME}'
+  df = pd.read_csv(url)
+  print(df.head())
 
-  try:  
-    sh = sa.open("Rootstalk Articles Front Matter")
-  except Exception as e:
-    print(e)  
+  # # Open the Google service account and sheet
+  # try:
+  #   sa = gs.service_account()
+  # except Exception as e:
+  #   print(e)
 
-  # Read all worksheets from the Google Sheet, and find the sheet named "Update"
-  sheets = sh.worksheets()
-  for ws in sheets:
-    title = ws.title
-    if (title == "Update"):
+  # try:  
+  #   sh = sa.open("Rootstalk Articles Front Matter")
+  # except Exception as e:
+  #   print(e)  
 
-      # Found the "Update" sheet
-      nrows = ws.row_count
-      ncols = ws.col_count
-      headers = ws.row_values(1)
+  # # Read all worksheets from the Google Sheet, and find the sheet named "Update"
+  # sheets = sh.worksheets()
+  # for ws in sheets:
+  #   title = ws.title
+  #   if (title == "Update"):
 
-      # Determine if the required_fields are present
-      for req in required_fields:
-        assert req not in headers, "Error: Required header '{req}' was NOT found in the 'Update' worksheet!"
+      # # Found the "Update" sheet
+      # nrows = ws.row_count
+      # ncols = ws.col_count
+      # headers = ws.row_values(1)
 
-      # Determine if any editable_fields are present
-      found = False
-      found_headers = []
+      # # Determine if the required_fields are present
+      # for req in required_fields.values():
+      #   if req not in headers:
+      #     msg = print(f"Error: Required header '{req}' was NOT found in the 'Update' worksheet!")
+      #     sys.exit(msg)
+
+      # # Determine if any editable_fields are present
+      # found = False
+      # found_headers = []
       
-      for edt in editable_fields:
-        if edt in headers:
-          found = True
-          found_headers.append(edt)
+      # for edt in editable_fields.values():
+      #   if edt in headers:
+      #     found = True
+      #     found_headers.append(edt)
 
       
 
@@ -175,9 +187,9 @@ if __name__ == '__main__':
 
 
 
-      # Loop row-by-row
-      for row in range(nrows):
-        values = ws.row_values(row+1)      
+      # # Loop row-by-row
+      # for row in range(nrows):
+      #   values = ws.row_values(row+1)      
 
 
   # csv_filename = "front-matter-status.csv"
