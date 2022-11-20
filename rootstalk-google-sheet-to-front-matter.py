@@ -35,6 +35,13 @@ editable_fields = {
   "no_leaf_bug": "no_leaf_bug"
 }
 
+list_fields = {
+  "tags": "tags",
+}
+
+def csvtolist(x):
+  return x.split(",")
+
 def process_record(rec, path):
   try:
     post = frontmatter.load(path)
@@ -42,7 +49,9 @@ def process_record(rec, path):
     print(e)
 
   for key,value in rec.items():
-    if key in editable_fields:
+    if key in list_fields:
+      post[key] = csvtolist(value)
+    elif key in editable_fields:
       post[key] = value
 
   # now dump the frontmatter post back into the file

@@ -139,6 +139,12 @@ def format_google_sheet(sheet, tab_name):
   batch.format_cell_ranges(wks, [('A1:Z1', bold)])
   return batch.execute()
 
+# From a blog post at https://stackoverflow.com/questions/50938274/sort-a-spread-sheet-via-gspread
+def sort_google_sheet(sheet, tab_name):
+  wks = sheet.worksheet(tab_name)
+  wks.sort((9, 'asc'))   # sort first by articleIndex
+  wks.sort((1, 'asc'))   # now sort by Content Path
+  return
 
 # From an example at https://pypi.org/project/gspread-formatting/
 def highlight_todo_cells(sheet, tab_name):
@@ -266,6 +272,12 @@ if __name__ == '__main__':
   # Call our format function to set the overall format of the new sheet
   try:
     format_google_sheet(sh, sheet_name)
+  except Exception as e:
+    print(e)
+
+  # Call our function to sort the new sheet
+  try:
+    sort_google_sheet(sh, sheet_name)
   except Exception as e:
     print(e)
 
