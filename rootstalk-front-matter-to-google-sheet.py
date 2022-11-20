@@ -80,10 +80,12 @@ def build_link(k, path):
   grandma = path.parent.parent.name
   if (filename == "_index.md"):
     filename = ""
-  if "past" in grandma:
-    url = f"{base_urls[k]}{grandma}/{parent}/{filename}".rstrip(" .md")
   else:
-    url = f"{base_urls[k]}{parent}/{filename}".rstrip(" .md")
+    filename = filename[:-3]    # remove .md  
+  if "past" in grandma:
+    url = f"{base_urls[k]}{grandma}/{parent}/{filename}"
+  else:
+    url = f"{base_urls[k]}{parent}/{filename}"
   return f"{url} "   # blank at the end is necessary for links to work properly
 
 def parent_path(path):
