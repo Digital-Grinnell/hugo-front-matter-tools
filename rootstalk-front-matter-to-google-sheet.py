@@ -74,7 +74,7 @@ def process_contributors(contributors, contributor_fields):
   return len(contributors), c_filtered 
 
 def build_link(k, path):
-  base_urls = { "develop":"https://thankful-flower-0a2308810.1.azurestaticapps.net/", "main":"https://icy-tree-020380010.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
+  base_urls = { "develop":"https://yellow-wave-0e513e510.3.azurestaticapps.net/", "main":"https://yellow-wave-0e513e510.3.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
   filename = path.name
   parent = path.parent.name
   grandma = path.parent.parent.name
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     writer.writeheader()
 
     # Specify the path to be processed...
-    filepath = str(pathlib.Path.home()) + "/GitHub/rootstalk/content/**/volume*/*.md"
+    filepath = str(pathlib.Path.home()) + "/GitHub/npm-rootstalk/content/**/volume*/*.md"
   
     # Iterate over the working directory tree + subdirectories for all {issue}/{article}.md files
     # Using '*.md' pattern recursively

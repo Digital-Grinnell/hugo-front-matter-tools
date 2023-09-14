@@ -26,10 +26,19 @@ Already up to date.
 
 Then...
 
-```
+```bash
 (.venv) ╭─mcfatem@MAC02FK0XXQ05Q ~/GitHub/hugo-front-matter-tools ‹main●›
 ╰─$ python3 rootstalk-front-matter-to-google-sheet.py
 ```
+
+And... Use this link to open the [_Rootstalk Articles Front Matter_ Google Sheet](https://docs.google.com/spreadsheets/d/1cOYyS5gwU3HbTG8aVkaBwFPL1Z_7U25bJBCKCePFafI/). 
+
+# History
+
+- 14-Sep-2023 - Updated to move from the old `rootstalk` project to `npm-rootstalk`.
+
+
+
 ---
 
 ## front-matter-to-csv.py (Deprecated)
@@ -274,9 +283,9 @@ header_image_fields = ["filename", "alt_text"]
 
 ### Link Generation Base URL
 
-The links used here are automatically built by the two principal braches of the [Rootstalk project repo](https://github.com/Digital-Grinnell/rootstalk), and a third for production at https://rootstalk.grinnell.edu.
+The links used here are automatically built by the two principal braches of the [Rootstalk project repo](https://github.com/Digital-Grinnell/npm-rootstalk), and a third for production at https://rootstalk.grinnell.edu.
 
 ```python
 def build_link(k, path):
-  base_urls = { "develop":"https://thankful-flower-0a2308810.1.azurestaticapps.net/", "main":"https://icy-tree-020380010.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
+  base_urls = { "develop":"https://yellow-wave-0e513e510.3.azurestaticapps.net/", "main":"https://yellow-wave-0e513e510.3.azurestaticapps.net/", "production":"https://rootstalk.grinnell.edu/" }
 ```
