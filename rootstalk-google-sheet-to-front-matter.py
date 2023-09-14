@@ -97,7 +97,7 @@ if __name__ == '__main__':
         for record in csv.DictReader(data):
 
           # worksheet record now in dict form, process it for updates
-          md_path = str(pathlib.Path.home()) + "/GitHub/rootstalk/content/" + record['Content Path'] + "/" + record['Filename'] + ".md"
+          md_path = str(pathlib.Path.home()) + "/GitHub/npm-rootstalk/content/" + record['Content Path'] + "/" + record['Filename'] + ".md"
           if os.path.exists(md_path):
             process_record(record, md_path)
           else:
