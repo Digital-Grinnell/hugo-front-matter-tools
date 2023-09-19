@@ -27,7 +27,7 @@ editable_fields = {
   "to-do": "to-do List",
   "articleIndex": "articleIndex",
   "description": "description",
-  "articletype": "articletype",
+  "categories": "categories",
   "tags": "tags",
   "byline": "byline",
   "byline2": "byline2",

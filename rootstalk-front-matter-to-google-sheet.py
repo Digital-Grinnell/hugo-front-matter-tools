@@ -37,7 +37,7 @@ fields = {
   "headshot": "contributor.headshot",
   "caption": "contributor.caption",
   "bio": "contributor.bio",
-  "articletype": "articletype",
+  "categories": "categories",
   "header_image": "header_image",
   "filename": "header_image.filename",
   "alt_text": "header_image.alt_text",

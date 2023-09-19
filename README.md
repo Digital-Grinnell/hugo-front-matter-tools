@@ -234,7 +234,7 @@ fields = {
   "headshot": "contributor.headshot",
   "caption": "contributor.caption",
   "bio": "contributor.bio",
-  "articletype": "articletype",
+  "categories": "categories",
   "header_image": "header_image",
   "filename": "header_image.filename",
   "alt_text": "header_image.alt_text",
@@ -254,7 +254,7 @@ fields = {
 The following fields are considered "obsolete" and deprecated.  Articles that still posses these fields should be upgraded to use corresponding `fields` as soon as possible.
 
 ```python
-obsolete = ["sidebar", "pid", "issueIndex", "azure_headerimage", "author", "azure_headshot", "authorbio", "headerimage"]
+obsolete = ["sidebar", "pid", "issueIndex", "azure_headerimage", "author", "azure_headshot", "authorbio", "headerimage", "articletype"]
 ```
 
 ### Contributor `dict` Fields
