@@ -8,6 +8,8 @@ import os
 import glob
 import pathlib
 import re
+import snowballstemmer
+
 from datetime import datetime
 from collections import Counter
 from stop_words import get_stop_words
@@ -20,7 +22,7 @@ import gspread as gs
 import gspread_formatting as gsf
 
 
-fields = ["term", "count"]
+fields = ["term", "count", "num_files"]
 stops = get_stop_words('en')
 
 # def truncate(text):
@@ -117,7 +119,7 @@ stops = get_stop_words('en')
 
 # Counts word frequency
 def count_words(text):				
-	skips = [".", ",", ":", ";", "'", '"']
+	skips = [".", ",", ":", ";", "'", '"', "”", "“", "‘"]
 	for ch in skips:
 		text = text.replace(ch, "")
 	word_counts = {}
@@ -128,7 +130,15 @@ def count_words(text):
 			word_counts[word]= 1
 	return word_counts
 
-	# >>>count_words(text) You can check the function
+# Count snowball-stemmed word frequency
+def snowball_count_words(the_ball):				
+	word_counts = {}
+	for word in the_ball:
+		if word in word_counts:
+			word_counts[word] += 1
+		else:
+			word_counts[word] = 1
+	return word_counts
 
 # Counts word frequency using Counter from collections
 def count_words_fast(text):	
@@ -147,6 +157,7 @@ def count_words_fast(text):
 # Main...
 if __name__ == '__main__':
   csv_filename = "text-analysis.csv"
+  stemmer = snowballstemmer.stemmer('english');
 
   terms = dict( )
   
@@ -161,7 +172,9 @@ if __name__ == '__main__':
     article = frontmatter.load(file)
     text = re.sub( r'{{%.+%}}', " ", article.content ).replace("\n", " ").replace("  ", " ").lower()   
 
-    counts = count_words(text)
+    # counts = count_words(text)
+    ball = stemmer.stemWords(text.split());
+    counts = snowball_count_words(ball)
 			
     for term in counts:
       if term not in stops and len(term) < 20:
@@ -177,7 +190,11 @@ if __name__ == '__main__':
     sorted_by_count = sorted(terms.items(), key=lambda x:x[1], reverse=True)
     dict_sorted = dict(sorted_by_count)
     for key, value in dict_sorted.items():
-      writer.writerow( {'term': key, 'count': value} )
+      count = int(value)
+      frac = value - count
+      n = frac * 1000.
+      num_files = int(round(n))
+      writer.writerow( {'term': key, 'count': count, 'num_files': num_files} )
     csvfile.close( )
 
 					
