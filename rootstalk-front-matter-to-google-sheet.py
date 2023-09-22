@@ -16,6 +16,8 @@ import csv
 import gspread as gs
 import gspread_formatting as gsf
 
+import editable_fields 
+
 branches = [ "develop", "main", "production" ]
 
 fields = {
@@ -161,6 +163,13 @@ def highlight_todo_cells(sheet, tab_name):
   rules.append(rule)
   rules.save()
 
+# From an example at https://pypi.org/project/gspread-formatting/
+def highlight_editable_column(sheet, tab_name, column):
+  wks = sheet.worksheet(tab_name)
+  fmt = gsf.cellFormat(
+    backgroundColor = gsf.Color(0.95, 0.95, 0.95)
+    )
+  gsf.format_cell_ranges(wks, [(column, fmt)])
 
 ######################################################################
 
@@ -281,8 +290,17 @@ if __name__ == '__main__':
   except Exception as e:
     print(e)
 
+  # Loop on editable_fields and format corresponding columns of our Google Sheet
+  for c in editable_fields.data.values( ):
+    try:
+      highlight_editable_column(sh, sheet_name, c)  
+    except Exception as e:
+      print(e)
+
   # Call our function to set conditional formatting rules
   try:
     highlight_todo_cells(sh, sheet_name)
   except Exception as e:
     print(e)
+
+

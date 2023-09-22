@@ -17,26 +17,16 @@ from typing import Dict
 import frontmatter
 import gspread as gs
 
+import editable_fields 
+
 required_fields = {
   "md-path": "Content Path",
   "md-file": "Filename"
 }
 
-editable_fields = {
-  "title": "title",
-  "to-do": "to-do List",
-  "articleIndex": "articleIndex",
-  "description": "description",
-  "categories": "categories",
-  "tags": "tags",
-  "byline": "byline",
-  "byline2": "byline2",
-  "subtitle": "subtitle",
-  "no_leaf_bug": "no_leaf_bug"
-}
-
 list_fields = {
   "tags": "tags",
+  "categories": "categories"
 }
 
 def csvtolist(x):
@@ -51,7 +41,7 @@ def process_record(rec, path):
   for key,value in rec.items():
     if key in list_fields:
       post[key] = csvtolist(value)
-    elif key in editable_fields:
+    elif key in editable_fields.data:
       post[key] = value
 
   # now dump the frontmatter post back into the file
