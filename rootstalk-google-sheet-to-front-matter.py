@@ -33,6 +33,7 @@ def csvtolist(x):
   return x.split(",")
 
 def process_record(rec, path):
+
   try:
     post = frontmatter.load(path)
   except Exception as e:
@@ -42,12 +43,14 @@ def process_record(rec, path):
     if key in list_fields:
       post[key] = csvtolist(value)
     elif key in editable_fields.data:
-      post[key] = value
+      clean_text = value.replace("\n", "").replace('"', '\"')
+      post[key] = clean_text
 
   # now dump the frontmatter post back into the file
   try:
     md = open(path, "w")
-    md.write(frontmatter.dumps(post))
+    text = frontmatter.dumps(post, width=2000)  # large 'width' keeps long strings from breaking
+    md.write(text)
     md.close
   except Exception as e:
     print(e)
