@@ -219,8 +219,8 @@ if __name__ == '__main__':
                   filtered[fields[f]] = ""
               value = len(value)
 
-            # Just a list, nothing special  
-            else:  
+            # Just a list, nothing special...but be sure to account for a None list element!  
+            elif (value[0] != None):  
               value = ",".join(value)
 
           # If we have a dict...
